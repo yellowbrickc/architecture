@@ -7,16 +7,11 @@
     "test": "jest"
   },
   "repository": {
-    "type": "git",
-    "url": "git@git.sub.rocks:aog/domain-events.git"
+    "type": "git"
   },
   "author": "Architecture Owner Group",
-  "license": "only cleverbridge internal use; may not be used for other than cleverbridge internal purposes and/or made accessible to persons outside cleverbridge and its contractors",
   "dependencies": {
     "recursive-readdir": "^2.2.1"
-  },
-  "publishConfig": {
-    "registry": "https://artifacts.sub.rocks/repository/npm-hosted/"
   },
   "devDependencies": {
     "jest": "^21.0.2"

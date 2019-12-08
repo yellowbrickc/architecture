@@ -1,15 +1,12 @@
 # Subscription Domain Events
 
-[![Build Status](https://ci.sub.rocks/buildStatus/icon?job=aog_domain-events)](https://ci.sub.rocks/job/aog_domain-events)
-
 All domain events which are distributed on the domain event bus shall be stored here and used to implement domain events. This is the single source of truth. If new events arise, add them here and release new versions of the package.
 
 # How to update, add, delete events?
 
 Please make sure you are aware of the listed conventions and be careful with compatibly as it may breaks consuming applications.
     
-- [Architectural domain event definition](https://git.sub.rocks/aog/documentation/blob/master/architectural-outline/README.md#domain-events)
-- [Topic and Consumer Group naming conventions](https://git.sub.rocks/paas/eventbus-app/blob/master/docs/topics.md#naming-conventions)
+- [Architectural domain event definition](./documentation/blob/master/architectural-outline/README.md#domain-events)
 
 Define the schema of your events based on above conventions.
 
@@ -36,6 +33,3 @@ Once you add or change an event make sure to put it in the list as well so that 
 
 There is a `CHANGELOG.md` at root. Please at some notes there so that other know what changed and in case how to migrate to a newer package version.
 
-## Release
-
-Release carefully using [appyard](https://git.sub.rocks/paas/appyard/blob/master/docs/command_release.md). Check the changes compared to the latest release before and decide whether this is a `patch`, `minor` or `major` release.
