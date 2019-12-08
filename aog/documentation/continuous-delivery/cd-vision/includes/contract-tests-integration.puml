@@ -1,0 +1,9 @@
+@startuml
+
+partition contract-tests-integration {
+    :pull contracts of
+    all systems;
+    :execute contracts;
+}
+
+@enduml

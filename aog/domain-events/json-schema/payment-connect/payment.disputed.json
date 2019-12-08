@@ -1,0 +1,143 @@
+{
+  "id": "payment-connect/payment.disputed.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Payment-Connect: Payment Disputed Event",
+  "description": "Signals that a payment has been disputed.",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique id of the payment",
+          "example": "abcdef"
+        },
+        "contractId": {
+          "type": "string",
+          "description": "The unique id of the contract.",
+          "example": "ctr_5"
+        },
+        "disputedAt" : {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the payment has been disputed.",
+          "example": "2017-02-02T13:44:19.000Z"
+        },
+        "amount" : {
+          "type": "number",
+          "description": "The disputed amount of the corresponding payment.",
+          "example": 7.99
+        },
+        "currency": {
+          "type": "string",
+          "length": 3,
+          "description": "The currency of the amount that has been disputed, using alphabetic ISO-4217 currency codes.",
+          "pattern": "^[A-Z]{3}$",
+          "example": "USD"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "charge_refunded",
+            "lost",
+            "needs_response",
+            "under_review",
+            "warning_closed",
+            "warning_needs_response",
+            "warning_under_review",
+            "won"
+          ],
+          "description": "The status of the disputed payment.",
+          "example": "needs_response"
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "bank_cannot_process",
+            "credit_not_processed",
+            "customer_initiated",
+            "debit_not_authorized",
+            "duplicate",
+            "fraudulent",
+            "general",
+            "incorrect_account_details",
+            "insufficient_funds",
+            "product_not_received",
+            "product_unacceptable",
+            "subscription_canceled",
+            "unrecognized"
+          ],
+          "description": "The reason for disputing the payment.",
+          "example": "insufficient_funds"
+        }
+      },
+      "required": [
+        "id",
+        "contractId",
+        "disputedAt",
+        "amount",
+        "currency",
+        "status",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "payment.disputed"
+      ],
+      "example": "payment.disputed"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "ctr_5"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

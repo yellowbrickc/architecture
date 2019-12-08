@@ -1,0 +1,161 @@
+{
+  "id": "new-business/signup.trialOnlyRequested.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "New Business: Signup Trial Only Requested Event",
+  "description": "Signals that a customer has selected a plan, accepted the terms of a signup offer and has completed all necessary steps which should lead to contract creation with only a trial period.",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The ID of the signup.",
+          "example": "018d2d7e-7378-11e7-8cf7-a6006ad3dba0"
+        },
+        "clientAccountId": {
+          "type": "string",
+          "description": "The client account ID this signup has been created for.",
+          "example": "HyUtdoIK-"
+        },
+        "completion": {
+          "type": "object",
+          "description": "Required information for completion process in signup flow.",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "The url for existing trial signup to complete flow with payment information.",
+              "example": "https://early.sub.rocks/signup-complete/018d2d7e-7378-11e7-8cf7-a6006ad3dba0"
+            }
+          },
+          "required": [
+            "url"
+          ],
+          "additionalProperties": false
+        },
+        "signupOffer": {
+          "type": "object",
+          "description": "The signupOffer which the user has accepted.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the signupOffer.",
+              "example": "0e49f2ae-7378-11e7-8cf7-a6006ad3dba0"
+            },
+            "trialTerm": {
+              "type": "integer",
+              "description": "The term in days which the customer might use the service as a trial and no billing should happen.",
+              "example": 30
+            }
+          },
+          "required": [
+            "id",
+            "trialTerm"
+          ],
+          "additionalProperties": false
+        },
+        "plan": {
+          "type": "object",
+          "description": "The plan which the customer has selected.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the plan.",
+              "example": "14523cf6-7378-11e7-8cf7-a6006ad3dba0"
+            },
+            "version": {
+              "type": "integer",
+              "description": "The version of the plan the customer has signed up for.",
+              "example": 1
+            }
+          },
+          "required": [
+            "id",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "customerUser": {
+          "type": "object",
+          "description": "The customer user who is requesting the signup.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the customer user.",
+              "example": "eaaa7300-7377-11e7-8cf7-a6006ad3dba0"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "clientAccountId",
+        "completion",
+        "signupOffer",
+        "plan",
+        "customerUser"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "fb99c512-7377-11e7-8cf7-a6006ad3dba0"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "signup.trialOnlyRequested"
+      ],
+      "example": "signup.trialOnlyRequested"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "018d2d7e-7378-11e7-8cf7-a6006ad3dba0"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "HyUtdoIK-"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "1d12ef20-7378-11e7-8cf7-a6006ad3dba0"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

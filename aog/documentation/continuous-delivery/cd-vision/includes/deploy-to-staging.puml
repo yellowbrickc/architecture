@@ -1,0 +1,11 @@
+@startuml
+
+partition deploy-to-staging {
+    :get system release version;
+    :apply release;
+    if (contains new migration tasks?) then (true)
+        :run migration tasks;
+    endif
+}
+
+@enduml

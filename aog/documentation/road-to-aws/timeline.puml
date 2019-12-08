@@ -1,0 +1,30 @@
+@startuml
+Project starts 25th of Juli 2017
+
+[Aquire Phase] lasts 99 days and is colored in red
+[Sprint 1] lasts 14 days and starts at [Aquire Phase]'s start and is colored in grey
+[Sprint 2] lasts 14 days and starts at [Sprint 1]'s end and is colored in grey
+[Sprint 3] lasts 14 days and starts at [Sprint 2]'s end and is colored in grey
+[Sprint 4] lasts 14 days and starts at [Sprint 3]'s end and is colored in grey
+[Sprint 5] lasts 14 days and starts at [Sprint 4]'s end and is colored in grey
+[Sprint 6] lasts 14 days and starts at [Sprint 5]'s end and is colored in grey
+[Sprint 7] lasts 14 days and starts at [Sprint 6]'s end and is colored in grey
+
+[AWS - VPC, Subnets, Security] as [AWS1] lasts 14 days and is colored in orange
+[AWS - Dockerize Jenkins, Gitlab] as [AWS5] lasts 7 days and starts 7 days before [AWS1]'s end and is colored in orange
+[AWS - Monitoring and Delivery] as [AWS2] lasts 14 days and is colored in orange and starts at [AWS1]'s end
+[AWS - Dev-Tools] as [AWS3] lasts 18 days and is colored in orange  and starts 7 days before [AWS2]'s end
+[AWS - Stage I: K8s, Kafka] as [AWS4] lasts 21 days and is colored in orange  and starts at [AWS3]'s end
+[AWS - costs forecast PaaS] as [AWS6] lasts 5 days and is colored in orange  and starts at [AWS4]'s end
+
+[Migration] lasts 42 days and starts at [AWS3]'s end
+[Moving GIT Repo's to AWS Gitlab] as [Migration1] lasts 21 days and starts at [Migration]'s start
+[Moving Services to AWS K8s] as [Migration2] lasts 21 days and starts at [AWS4]'s end
+[AWS - costs forecast Teams] as [Migration3] lasts 5 days and is colored in green  and starts at [AWS4]'s end
+
+' [Migration Team I] lasts 28 days and starts at [Migration]'s start
+' [Migration Team II] lasts 14 days and starts 14 days before [Migration Team I]'s end
+' [Migration Team III] lasts 14 days and starts at [Migration Team I]'s end
+' [Migration Team IV] lasts 14 days and starts at [Migration Team I]'s end
+
+@enduml

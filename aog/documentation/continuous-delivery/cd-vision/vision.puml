@@ -1,0 +1,69 @@
+@startuml
+
+:development;
+
+partition system-ABC {
+    split
+        !include includes/node-backend-svc.puml
+    split again
+        !include includes/scala-backend-svc.puml
+    split again
+        !include includes/spa.puml
+    end split
+    if (service quality gates passed and build success?) then (true)
+        split
+        !include includes/e2e-system.puml
+        split again
+            !include includes/contract-tests-system.puml
+        end split
+        if (system quality gates passed?) then (true)
+            :add tag 'latest' for the system;
+        else (no)
+            stop
+        endif
+    else (no)
+        stop
+    endif
+}
+
+!include includes/deploy-to-integration.puml
+
+partition environment-integration {
+    split
+        !include includes/contract-tests-integration.puml
+    split again
+        !include includes/e2e-platform-integration.puml
+    split again
+        !include includes/security-tests.puml
+    end split
+    if (integration system quality gates passed?) then (true)
+        :add 'release' tag for the system;
+    else (no)
+        stop
+    endif
+}
+
+if (deploy to staging?) then (true)
+    !include includes/deploy-to-staging.puml
+else (no)
+    stop
+endif
+
+partition environment-staging {
+    split
+        !include includes/load-tests.puml
+    split again
+        !include includes/e2e-platform-staging.puml
+    end split
+}
+
+if (deploy to production?) then (true)
+    !include includes/deploy-to-production.puml
+else (no)
+    stop
+endif
+
+:release;
+end
+
+@enduml

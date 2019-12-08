@@ -1,0 +1,16 @@
+@startuml
+
+partition node-backend-svc {
+    :push to master;
+    :build;
+    split
+    :unit tests;
+    split again
+    :license check;
+    split again
+    :static source code analysis;
+    end split
+    :push to registry _build_123;
+}
+
+@enduml

@@ -1,0 +1,169 @@
+{
+  "id": "identity-hub/customerUser.registered.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Identity Hub: Customer user Registered Event",
+  "description": "Signals that a Customer user has been registered",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique id of the Customer user.",
+          "example": "510ec7c0-9c74-11e7-abc4-cec278b6b50a"
+        },
+        "clientAccountId": {
+          "type": "string",
+          "description": "The ID of the client account the Customer user belongs to.",
+          "example": "HyUtdoIK-"
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the Customer user.",
+          "example": "mueller@googlemail.com"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "The first name of the Customer user.",
+          "example": "Manfred"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The last name of the Customer user.",
+          "example": "Müller"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name of the Customer user.",
+          "example": "Manfred Müller"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country of the Customer user in ISO 3166 ALPHA-2 format. This can also be used as the country of the customer's company",
+          "pattern": "^[A-Z]{2}$",
+          "example": "US"
+        },
+        "state": {
+          "type": "string",
+          "description": "State of the Customer user in ISO 3166 ALPHA-2 format.",
+          "pattern": "^[A-Z]{2}-[A-Z]{2}$",
+          "example": "US-CA"
+        },
+        "locale": {
+          "type": "string",
+          "description": "The locale of the Customer user. This might be either the the ISO 639-1 + ISO-3166 Alpha 2 ('en-US') code, or just the ISO 639-1 language code part ('en').",
+          "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+          "example": "en-US"
+        },
+        "companyZip": {
+          "type": "string",
+          "description": "The zip of the customer's company.",
+          "example": "50670"
+        },
+        "companyName": {
+          "type": "string",
+          "description": "The name of the customer's company.",
+          "example": "cleverbridge AG"
+        },
+        "companyStreet": {
+          "type": "string",
+          "description": "The street of the customer's company.",
+          "example": "Gereonstr. 43-65"
+        },
+        "companyVatId": {
+          "type": "string",
+          "description": "Depreacted: The VAT ID of the customer's company.",
+          "example": "EU12318924123"
+        },
+        "companyTaxId": {
+          "type": "string",
+          "description": "The Tax ID of the customer's company. Depending on the given companyTaxIdType.",
+          "example": "EU12318924123"
+        },
+        "companyTaxIdType": {
+          "type": "string",
+          "description": "The type of the tax id. Possible values: [vat-id, sales-tax-id]",
+          "example": "vat-id"
+        },
+        "companyCity": {
+          "type": "string",
+          "description": "The city of the customer's company.",
+          "example": "Cologne"
+        },
+        "externalCustomerId": {
+          "type": "string",
+          "description": "The unique identifier for the customer user in the client's system.",
+          "example": "CUSTOMER_123958583"
+        }
+      },
+      "required": [
+        "id",
+        "clientAccountId",
+        "email",
+        "firstName",
+        "lastName",
+        "displayName",
+        "country",
+        "locale"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "customerUser.registered"
+      ],
+      "example": "customerUser.registered"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "510ec7c0-9c74-11e7-abc4-cec278b6b50a"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "HyUtdoIK-"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

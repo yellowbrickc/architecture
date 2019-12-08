@@ -1,0 +1,40 @@
+@startuml
+
+entity Gitlab
+entity Jenkins
+
+    entity K8s
+box "test-runner-job" #lightblue
+    entity e2eContainer
+    entity seleniumContainer
+    entity publisherContainer
+    entity volumeMount
+end box
+
+box "test-reporter-job" #lightgreen
+    entity reporterContainer
+end box
+
+entity S3
+
+Gitlab -> Jenkins: triggered by hook
+Jenkins -> Jenkins: execute test runner Jenkins Job
+Jenkins -> K8s: apply K8s test-runner Job
+K8s -> K8s: start e2eContainer, seleniumContainer, \npublisherContainer (including a shared volume mount)
+e2eContainer -> seleniumContainer: execute tests
+e2eContainer -> volumeMount: write logs, screenshots, reports
+publisherContainer -> volumeMount: read
+publisherContainer -> S3: publish logs, screenshots, reports to S3 bucket \n (/[env]/[system-name]/[job-name]/[build-no])
+Jenkins -> e2eContainer: Status? (kubectl describe job [e2eContainer])
+Jenkins -> K8s: delete Job (delay 5s to allow publisherContainer to finish)
+Jenkins -> Jenkins: trigger Jenkins test-reporter Job
+Jenkins -> K8s: apply K8s test-reporter Job
+K8s -> K8s: start reporterContainer \n(gets config where publisher has stored results)
+reporterContainer -> S3: read from bucket
+reporterContainer -> reporterContainer: generate Reports\n and update index.html
+reporterContainer -> S3: publish report
+reporterContainer -> reporterContainer: stop process
+Jenkins -> reporterContainer: Status? (kubectl describe job [reporterContainer])
+Jenkins -> K8s: delete Job
+
+@enduml

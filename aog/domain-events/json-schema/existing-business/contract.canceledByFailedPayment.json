@@ -1,0 +1,91 @@
+{
+  "id": "existing-business/contract.canceledByFailedPayment.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Existing-Business: Contract Canceled due to the failure of the payment",
+  "description": "Signals that a contract has been canceled due to the failure of the payment.",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string", "description": "The unique id of the contract.", "example": "ctr_5"},
+        "clientAccountId": {"type": "string", "description": "The id of the client account.", "example": "cl_17"},
+        "customerUserId": {"type": "string", "description": "The id of the customer user.", "example": "cus_lsdjfl-34nsdf-23rsdf-eee"},
+        "planId": {"type": "string", "description": "The planId of the contract.", "example": "pl_hhufushsw"},
+        "planVersion": {"type": "integer", "description": "The version of the plan in the contract.", "example": 1},
+        "canceledAt": {"type": "string", "format": "date-time", "description": "The date and time when the contract has been canceled.", "example": "2017-02-02T13:44:19.000Z"},
+        "status": {"type": "string", "enum": ["canceled"], "example": "canceled", "description": "The status of the canceled contract. Can only have the value 'canceled'"},
+        "endsAt": {"type": "string", "format": "date-time", "description": "The date and time when the contract will end.", "example": "2017-04-02T13:44:19.000Z"},
+        "paymentId": {"type": "string", "description": "The id of the failed payment which triggered the cancelation", "example": "pay_12345"}
+      },
+      "required": [
+        "id",
+        "clientAccountId",
+        "customerUserId",
+        "planId",
+        "planVersion",
+        "canceledAt",
+        "status",
+        "endsAt",
+        "paymentId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "contract.canceledByFailedPayment"
+      ],
+      "example": "contract.canceledByFailedPayment"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "ctr_5"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

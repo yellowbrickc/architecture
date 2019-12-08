@@ -1,0 +1,5 @@
+project: domain-events
+group: aog
+projectType: npm
+isPci: false
+issueKeyValidation: false

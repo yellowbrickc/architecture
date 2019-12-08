@@ -1,0 +1,20 @@
+@startuml
+
+Client -> NBS: createSignup API call
+NBS -> Bus: publish signup.requested
+IDH -> Bus: consume signup requested
+IDH -> IDH: pick up data from event and create a customerUser
+IDH -> Bus: customerUser.registered
+NBS -> Bus: consume customerUser.registered
+NBS -> NBS: add customerUser reference to signup
+...
+NBS -> Bus: publish signup.completed
+EBS -> Bus: consume signup.completed
+EBS -> EBS: create subscription and ...
+EBS -> Bus: publish contract.signed
+NBS -> Bus: consume contract.signed
+NBS -> NBS: add contractId to signup
+NBS -> Bus: publish signup.succeeded
+NBS -> Client: response with signupId, subscriptionId, ...
+
+@enduml

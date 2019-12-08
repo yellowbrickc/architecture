@@ -1,0 +1,15 @@
+@startuml
+
+partition spa {
+    :push to master;
+    split
+    :unit tests;
+    split again
+    :license check;
+    split again
+    :static source code analyses;
+    end split
+    :push to CDN build_xxx;
+}
+
+@enduml

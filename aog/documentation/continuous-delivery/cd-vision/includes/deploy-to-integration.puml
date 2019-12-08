@@ -1,0 +1,12 @@
+@startuml
+
+partition deploy-to-integration {
+    :orchestrate based on
+    last green builds;
+    :deploy 1-n projects;
+    if (contains new migration tasks?) then (true)
+        :run migration tasks;
+    endif
+}
+
+@enduml

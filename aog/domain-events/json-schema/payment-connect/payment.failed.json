@@ -1,0 +1,119 @@
+{
+  "id": "payment-connect/payment.failed.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Payment-Connect: Payment Failed Event",
+  "description": "Signals that a payment attempt has failed.",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique id of the payment",
+          "example": "abcdef"
+        },
+        "contractId": {
+          "type": "string",
+          "description": "The unique id of the contract.",
+          "example": "ctr_5"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "DEPRECATED - The timestamp when the payment has been made.",
+          "example": "2017-02-02T13:44:19.000Z"
+        },
+        "failedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the payment failed.",
+          "example": "2017-02-02T13:44:19.000Z"
+        },
+        "errorType": {
+          "type": "string",
+          "description": "The type of the error that occurred. Possible values are Error, CardError, InvalidRequestError, APIError, AuthenticationError, PermissionError, RateLimitError, ConnectionError, SignatureVerificationError, Unknown",
+          "example": "CardError"
+        },
+        "message": {
+          "type": "string",
+          "description": "A human-readable message providing details about the error.",
+          "example": "The cardholder's name did not match."
+        },
+        "code": {
+          "type": "string",
+          "description": "For errors of type 'cardError' a short string describing the kind of card error that occurred. Possible values are invalid_number, invalid_expiry_month, invalid_expiry_year, invalid_cvc, invalid_swipe_data, incorrect_number, expired_card, incorrect_cvc, incorrect_zip, card_declined, missing, processing_error, unknown",
+          "example": "invalid_cvc"
+        },
+        "declineCode": {
+          "type": "string",
+          "description": "For card errors resulting from a bank decline a short string indicating the bank's reason for the decline if they provide one. Valid valuesa re approve_with_id, call_issuer, card_not_supported, card_velocity_exceeded, currency_not_supported, do_not_honor, do_not_try_again, duplicate_transaction, expired_card, fraudulent, generic_decline, incorrect_number, incorrect_cvc, incorrect_pin, incorrect_zip, insufficient_funds, invalid_account, invalid_amount, invalid_cvc, invalid_expiry_year, invalid_number, invalid_pin, issuer_not_available, lost_card, new_account_information_available, no_action_taken, not_permitted, pickup_card, pin_try_exceeded, processing_error, reenter_transaction, restricted_card, revocation_of_all_authorizations, revocation_of_authorization, security_violation, service_not_allowed, stolen_card, stop_payment_order, testmode_decline, transaction_not_allowed, try_again_later, withdrawal_count_limit_exceeded",
+          "example": "incorrect_cvc"
+        }
+      },
+      "required": [
+        "id",
+        "contractId",
+        "failedAt",
+        "errorType"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "payment.failed"
+      ],
+      "example": "payment.failed"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "ctr_5"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

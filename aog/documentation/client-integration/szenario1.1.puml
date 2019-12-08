@@ -1,0 +1,16 @@
+@startuml
+User -> client.myAccount: register
+User -> NBS: start signup
+note left
+  könnte zB parametrisiert aufgerufen werden
+  (Übergabe der userDaten)
+end note
+NBS -> NBS: Ah, User kenn ich nicht (keine session, kein token)
+NBS -> IDH: mach session, und komm zu mir zurück
+note left
+    client hat configuriert, wie der user
+    angelegt / identifiziert werden kann
+end note
+IDH -> IDH: erkennt den user, legt Datensatz an
+IDH -> NBS: leitet weiter, mit session u token für den user
+@enduml

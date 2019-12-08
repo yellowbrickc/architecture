@@ -1,0 +1,203 @@
+{
+  "id": "existing-business/contract.withTrialSigned.v2.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Existing-Business: Contract withTrialSigned Event",
+  "description": "Signals that a contract including a trial period has been signed and is now effective.",
+  "version": 2,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "paymentProfileId",
+        "customerUserId",
+        "signupId",
+        "signedAt",
+        "cancelationUrl",
+        "servicePeriods"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique id of the contract.",
+          "example": "0020f5dd-a7de-31af-81ba-3a5b68282480"
+        },
+        "paymentProfileId": {
+          "type": "string",
+          "description": "The payment profile id for this contract.",
+          "example": "6dc7a0c0-9503-11e8-b37c-fdfdc5044780"
+        },
+        "customerUserId": {
+          "type": "string",
+          "description": "The customer user id for this contract.",
+          "example": "b9b1591e-bc22-4a4e-ac6f-6e19a32e1483"
+        },
+        "signupId": {
+          "type": "string",
+          "description": "The signup id for which the contract is created.",
+          "example": "2a0eb648-d489-4a3c-9fab-1afcaf7ed4d0"
+        },
+        "signedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision when the contract was signed.",
+          "example": "2017-01-28T13:44:19.000Z"
+        },
+        "cancelationUrl": {
+          "type": "string",
+          "description": "UI page where the customer can cancel his contract.",
+          "example": "http://localhost/contracts/0020f5dd-a7de-31af-81ba-3a5b68282480/cancel"
+        },
+        "servicePeriods": {
+          "type": "array",
+          "description": "Service periods the event references to.",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "required": [
+              "servicePeriodId",
+              "sequenceId",
+              "from",
+              "to",
+              "plan",
+              "billing"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "servicePeriodId": {
+                "type": "string",
+                "description": "The unique id of this service period.",
+                "example": "b2ee0826-810b-4da6-a605-ae1283382ee2"
+              },
+              "sequenceId": {
+                "type": "number",
+                "description": "The increasing sequence id for service periods for this contract.",
+                "example": 1
+              },
+              "from": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Begin of service period as ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+                "example": "2017-02-01T00:00:00.000Z"
+              },
+              "to": {
+                "type": "string",
+                "format": "date-time",
+                "description": "End of service period as ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+                "example": "2017-02-28T23:59:59.999Z"
+              },
+              "plan": {
+                "type": "object",
+                "description": "Plan for this contract.",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "version"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The planId the customer signed up for.",
+                    "example": "e15c5ea0-4fa7-11e8-b2ef-2d2e6dae56a3"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "description": "The version of the plan in the contract.",
+                    "example": 1
+                  }
+                }
+              },
+              "billing": {
+                "type": ["object", "null"],
+                "description": "The composition of the charged amount.",
+                "additionalProperties": false,
+                "required": [
+                  "grossAmount",
+                  "netAmount",
+                  "taxAmount",
+                  "currency"
+                ],
+                "properties": {
+                  "grossAmount": {
+                    "type": "number",
+                    "description": "The gross amount including all fees and taxes that has to be paid.",
+                    "example": 3.99
+                  },
+                  "netAmount": {
+                    "type": "number",
+                    "description": "The net amount that has to be paid.",
+                    "example": 2.99
+                  },
+                  "taxAmount": {
+                    "type": "number",
+                    "description": "The tax amount that has to be paid.",
+                    "example": 1.00
+                  },
+                  "currency": {
+                    "type": "string",
+                    "length": 3,
+                    "pattern": "^[A-Z]{3}$",
+                    "description": "The currency of the amount that has to be paid, using alphabetic ISO-4217 currency codes.",
+                    "example": "USD"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "A unique id. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [ "contract.withTrialSigned" ]
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "0020f5dd-a7de-31af-81ba-3a5b68282480"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Creation date time the event happened as ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-28T13:44:20.123Z"
+    },
+    "version": {
+      "type": "integer",
+      "const": 2
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "HyUtdoIK-"
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "f096dda7-8046-4a4d-a2ee-ae705ef66016"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "id": "serve-communicate/thankYouPage.published.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Serve-Communicate: thank-you-page published event",
+  "description": "Signals the readyness of a thank-you-page to be redirected to.",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The ID of the thank-you-page.",
+          "example": "5011b6f8-4d18-11e7-b114-b2f933d5fe66"
+        },
+        "url": {
+          "type": "string",
+          "description": "The url the thank-you-page can be accessed at and the customer can be redirected to.",
+          "example": "https://subscription-platform-dev.cgn.cleverbridge.com/serve-communicate/thank-you/c2fdbd50-2a87-11e7-8d05-0983593c4696"
+        },
+        "contractId": {
+          "type": "string",
+          "description": "The unique id of the contract.",
+          "example": "ctr_5"
+        }
+      },
+      "required": [
+          "id",
+          "url"
+      ],
+      "additionalProperties": false
+      }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "thankYouPage.published"
+      ],
+      "example": "thankYouPage.published"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "5011b6f8-4d18-11e7-b114-b2f933d5fe66"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

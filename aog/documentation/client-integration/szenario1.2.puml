@@ -1,0 +1,25 @@
+@startuml
+User -> client.myAccount: register
+client.myAccount -> User: zeige Plan Selektion an
+User -> client.myAccount: plan selektiert, "Los"
+
+...
+
+client.myAccount -> IDH: API call "createCustomerUser" (Name, ...)
+note left
+  dieser part könnte auch zu einem
+  anderen Zeitpunkt erfolgen
+end note
+IDH -> client.myAccount: success, customerUserId
+
+...
+
+client.myAccount -> EBS: API call "createSignup" (mit planId, mit customerUserId)
+note left
+    hier nur trials ohne automatische
+    Konvertierung möglich
+    (fehlende Paymentdaten)
+end note
+EBS -> client.myAccount: success, response contractId
+client.myAccount -> User: toll, du hast es geschafft!
+@enduml

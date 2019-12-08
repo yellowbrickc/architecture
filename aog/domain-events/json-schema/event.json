@@ -1,0 +1,64 @@
+{
+  "id": "event.json",
+  "title": "Event",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Schema for the domain event envelope that is used by every event.",
+  "type": "object",
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "offer.accepted"
+      ],
+      "example": "offer.accepted"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique among all the entities of the same entityType.",
+      "example": "xyz"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Must contain the entityId plus other fields that have changed in the entity. 'Flat' payloads shall be preferred. Must use camelCase for the key names.All timestamps shall be named as '...At' and use ISO 8601 DateTimeStampin UTC with millisecond precision: `YYYY-MM-DDThh:mm:ss.sssZ`.",
+      "example": "{}"
+    }
+  },
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "payload",
+    "correlationId"
+  ],
+  "additionalProperties": false
+}

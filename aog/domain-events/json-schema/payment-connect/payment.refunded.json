@@ -1,0 +1,111 @@
+{
+  "id": "payment-connect/payment.refunded.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Payment-Connect: Payment Refunded Event",
+  "description": "Signals that a payment has been refunded.",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique id of the payment",
+          "example": "abcdef"
+        },
+        "contractId": {
+          "type": "string",
+          "description": "The unique id of the contract.",
+          "example": "ctr_5"
+        },
+        "refundedAt" : {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the payment has been refunded.",
+          "example": "2017-02-02T13:44:19.000Z"
+        },
+        "amount": {
+          "type": "number",
+          "description": "The refunded amount of the corresponding payment.",
+          "example": 7.99
+        },
+        "currency": {
+          "type": "string",
+          "length": 3,
+          "description": "The currency of the refunded amount, using alphabetic ISO-4217 currency codes.",
+          "pattern": "^[A-Z]{3}$",
+          "example": "USD"
+        },
+        "refundReason": {
+          "type": "string",
+          "description": "Refund reason. Possible values are: 'duplicate', 'fraudulent', 'requested_by_customer' and 'unknown'. Defaults to 'unknown' when no reason has been provided.",
+          "example": "unknown"
+        }
+      },
+      "required": [
+        "id",
+        "contractId",
+        "refundedAt",
+        "amount",
+        "currency"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "payment.refunded"
+      ],
+      "example": "payment.refunded"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "ctr_5"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

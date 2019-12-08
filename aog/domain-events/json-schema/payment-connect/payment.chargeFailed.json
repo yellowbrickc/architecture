@@ -1,0 +1,119 @@
+{
+  "id": "payment-connect/payment.chargeFailed.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Payment-Connect: Payment RetryScheduled Event",
+  "description": "Signals that a payment retry has been scheduled.",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique id of the payment",
+          "example": "payment_123"
+        },
+        "paymentProfileId": {
+          "type": "string",
+          "description": "The unique id of the payment profile that is used for the payment.",
+          "example": "ctr_5"
+        },
+        "contractId": {
+          "type": "string",
+          "description": "The unique id of the contract.",
+          "example": "ctr_5"
+        },
+        "chargeFailedAt" : {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the retry has been scheduled.",
+          "example": "2017-02-02T13:44:19.000Z"
+        },
+        "errorType" : {
+          "type": "string",
+          "description": "The type of the error that occurred.",
+          "example": "CardError"
+        },
+        "code" : {
+          "type": "string",
+          "description": "For errors of type 'cardError' a short string describing the kind of card error that occurred.",
+          "example": "invalid_cvc"
+        },
+        "message" : {
+          "type": "string",
+          "description": "A human-readable message providing details about the error.",
+          "example": "The cardholder's name did not match."
+        },
+        "declineCode" : {
+          "type": "string",
+          "description": "For card errors resulting from a bank decline a short string indicating the bank's reason for the decline if they provide one.",
+          "example": "incorrect_cvc"
+        }
+      },
+      "required": [
+        "id",
+        "paymentProfileId",
+        "contractId",
+        "chargeFailedAt",
+        "errorType"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "payment.chargeFailed"
+      ],
+      "example": "payment.chargeFailed"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "ctr_5"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

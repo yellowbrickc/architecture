@@ -1,0 +1,229 @@
+{
+  "id": "new-business/signup.withoutTrialRequested.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "New Business: Signup Without Trial Requested Event",
+  "description": "Signals that a customer has selected a plan without trial, accepted the terms of a signup offer and has completed all necessary steps which should lead to contract creation.",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The ID of the signup.",
+          "example": "018d2d7e-7378-11e7-8cf7-a6006ad3dba0"
+        },
+        "clientAccountId": {
+          "type": "string",
+          "description": "The client account ID this signup has been created for.",
+          "example": "HyUtdoIK-"
+        },
+        "pricing": {
+          "type": "object",
+          "description": "Price information of this signup.",
+          "properties": {
+            "currency": {
+              "type": "string",
+              "length": 3,
+              "pattern": "^[A-Z]{3}$",
+              "description": "The currency of the signup choose by user or based on IP, using alphabetic ISO-4217 currency codes.",
+              "example": "USD"
+            },
+            "gross": {
+              "type": "number",
+              "minimum": 0,
+              "description": "The gross amount of money this signup costs",
+              "example": 7.99
+            },
+            "net": {
+              "type": "number",
+              "minimum": 0,
+              "description": "The net amount of money this signup costs",
+              "example": 6.71
+            },
+            "taxation": {
+              "type": "object",
+              "description": "Taxation information of this signup.",
+              "properties": {
+                "amount": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "The absolute amount of tax that applies to the signup. Net price and this amount should add up to gross price.",
+                  "example": 1.28
+                },
+                "rate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "The tax rate that applies to the signup. The rate is already divided by 100 so this field would contain 0.19 for german VAT instead of 19%",
+                  "example": 0.19
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The name of the tax that was calculated.",
+                  "example": "VAT"
+                }
+              },
+              "required": [
+                "amount",
+                "rate",
+                "name"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "currency",
+            "gross"
+          ],
+          "additionalProperties": false
+        },
+        "signupOffer": {
+          "type": "object",
+          "description": "The signupOffer which the user has accepted.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the signupOffer.",
+              "example": "0e49f2ae-7378-11e7-8cf7-a6006ad3dba0"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "plan": {
+          "type": "object",
+          "description": "The plan which the customer has selected.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the plan.",
+              "example": "14523cf6-7378-11e7-8cf7-a6006ad3dba0"
+            },
+            "version": {
+              "type": "integer",
+              "description": "The version of the plan the customer has signed up for.",
+              "example": 1
+            }
+          },
+          "required": [
+            "id",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "customerUser": {
+          "type": "object",
+          "description": "The customer user who is requesting the signup.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the customer user.",
+              "example": "eaaa7300-7377-11e7-8cf7-a6006ad3dba0"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "paymentProfile": {
+          "type": "object",
+          "description": "The payment profile which should be used after the trial.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the payment profile.",
+              "example": "eaaa7300-7377-11e7-8cf7-a6006ad3dba0"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "connectionInformation": {
+          "type": "object",
+          "description": "The connectionInformation the client used to request this signup.",
+          "properties": {
+            "customerIpCountry": {
+              "type": "string",
+              "length": 2,
+              "pattern": "^[A-Z]{2}$",
+              "description": "The country that has been detected by the customers IP.",
+              "example": "DE"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "clientAccountId",
+        "pricing",
+        "signupOffer",
+        "plan",
+        "paymentProfile",
+        "customerUser"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "fb99c512-7377-11e7-8cf7-a6006ad3dba0"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "signup.withoutTrialRequested"
+      ],
+      "example": "signup.withoutTrialRequested"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "018d2d7e-7378-11e7-8cf7-a6006ad3dba0"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "HyUtdoIK-"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "1d12ef20-7378-11e7-8cf7-a6006ad3dba0"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

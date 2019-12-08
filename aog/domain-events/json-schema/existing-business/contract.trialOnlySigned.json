@@ -1,0 +1,158 @@
+{
+  "id": "existing-business/contract.trialOnlySigned.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Existing-Business: Contract trialOnlySigned Event",
+  "description": "Signals that a trial only contract has been signed and is now effective.",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique id of the contract.",
+          "example": "ctr_5"
+        },
+        "clientAccountId": {
+          "type": "string",
+          "description": "The unique id of the client account.",
+          "example": "cl_17"
+        },
+        "customerUserId": {
+          "type": "string",
+          "description": "The id of the customer user.",
+          "example": "cus_lsdjfl-34nsdf-23rsdf-eee"
+        },
+        "planId": {
+          "type": "string",
+          "description": "The planId the customer signed up for.",
+          "example": "pl_hhufushsw"
+        },
+        "planVersion": {
+          "type": "integer",
+          "description": "The version of the plan the customer signed up for.",
+          "example": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "trial"
+          ],
+          "example": "trial",
+          "description": "The status of the trial only contract. Can only have the value 'trial'"
+        },
+        "signedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the trial only contract was signed.",
+          "example": "2017-02-02T13:44:19.000Z"
+        },
+        "signupId": {
+          "type": "string",
+          "description": "The signup ID for which the trial only contract is created.",
+          "example": "signup_1212"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time when the trial only contract will expire.",
+          "example": "2017-02-02T13:44:19.000Z"
+        },
+        "cancelUrl": {
+          "type": "string",
+          "description": "UI page where the customer can cancel his contract.",
+          "example": "http://localhost/contract/1/cancel"
+        },
+        "serviceEnd": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2018-01-01T12:00:00.123Z",
+          "description": "The date and time when the current service period ends. Is equal to expiresAt."
+        },
+        "serviceStart": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2017-09-29T12:00:00.123Z",
+          "description": "The date and time when the current service period starts. Is equal to signedAt."
+        },
+        "completionUrl": {
+          "type": "string",
+          "example": "http://localhost/signup-complete/1234",
+          "description": "UI page where the customer can complete the signup."
+        }
+      },
+      "required": [
+        "id",
+        "clientAccountId",
+        "customerUserId",
+        "planId",
+        "planVersion",
+        "status",
+        "signedAt",
+        "signupId",
+        "expiresAt",
+        "cancelUrl",
+        "serviceEnd",
+        "serviceStart",
+        "completionUrl"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "contract.trialOnlySigned"
+      ],
+      "example": "contract.trialOnlySigned"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "ctr_5"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

@@ -1,0 +1,10 @@
+@startuml
+
+partition e2e-system {
+    :compose and boot all
+    parts of the system;
+    :generate test data;
+    :run tests;
+}
+
+@enduml

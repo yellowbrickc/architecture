@@ -1,0 +1,9 @@
+@startuml
+
+partition scala-backend-svc {
+    :push to master;
+    :???;
+    :push to registry _build_xxx;
+}
+
+@enduml

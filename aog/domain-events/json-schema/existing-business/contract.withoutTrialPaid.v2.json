@@ -1,0 +1,179 @@
+{
+  "id": "existing-business/contract.withoutTrialPaid.v2.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Existing-Business: Contract withoutTrialPaid Event",
+  "description": "Signals that a contract without trial period has been paid.",
+  "version": 2,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "required": [
+        "id",
+        "paidAt",
+        "servicePeriods"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique id of the contract.",
+          "example": "709fc513-7bcc-4458-b1dd-9c779005464e"
+        },
+        "paidAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision when the contract was signed.",
+          "example": "2017-03-01T00:00:37.326Z"
+        },
+        "servicePeriods": {
+          "type": "array",
+          "description": "Service periods the event references to.",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "servicePeriodId",
+              "sequenceId",
+              "from",
+              "to",
+              "plan",
+              "billing"
+            ],
+            "properties": {
+              "servicePeriodId": {
+                "type": "string",
+                "description": "The unique id of this service period.",
+                "example": "c8fd1b41-ae9c-4252-a1c5-f000d395d5d4"
+              },
+              "sequenceId": {
+                "type": "number",
+                "description": "The increasing sequence id for service periods for this contract.",
+                "example": 1
+              },
+              "from": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Begin of service period as ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+                "example": "2017-03-01T00:00:00.000Z"
+              },
+              "to": {
+                "type": "string",
+                "format": "date-time",
+                "description": "End of service period as ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+                "example": "2017-03-31T23:59:59.999Z"
+              },
+              "plan": {
+                "type": "object",
+                "description": "Plan for this contract.",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "version"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The planId the customer signed up for.",
+                    "example": "e15c5ea0-4fa7-11e8-b2ef-2d2e6dae56a3"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "description": "The version of the plan in the contract.",
+                    "example": 1
+                  }
+                }
+              },
+              "billing": {
+                "type": "object",
+                "description": "The composition of the charged amount.",
+                "additionalProperties": false,
+                "required": [
+                  "grossAmount",
+                  "netAmount",
+                  "taxAmount",
+                  "currency"
+                ],
+                "properties": {
+                  "grossAmount": {
+                    "type": "number",
+                    "description": "The gross amount including all fees and taxes that has to be paid.",
+                    "example": 3.99
+                  },
+                  "netAmount": {
+                    "type": "number",
+                    "description": "The net amount that has to be paid.",
+                    "example": 2.99
+                  },
+                  "taxAmount": {
+                    "type": "number",
+                    "description": "The tax amount that has to be paid.",
+                    "example": 1.00
+                  },
+                  "currency": {
+                    "type": "string",
+                    "length": 3,
+                    "pattern": "^[A-Z]{3}$",
+                    "description": "The currency of the amount that has to be paid, using alphabetic ISO-4217 currency codes.",
+                    "example": "USD"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "A unique id. Shall be a v1-uuid (time-based).",
+      "example": "44432351-7285-474d-b4ae-970741d9ca36"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [ "contract.withoutTrialPaid" ]
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the contract.id property in the payload.",
+      "example": "709fc513-7bcc-4458-b1dd-9c779005464e"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Creation date time the event happened as ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-03-01T00:00:49.123Z"
+    },
+    "version": {
+      "type": "integer",
+      "const": 2
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "HyUtdoIK-"
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "e3d7bc6d-c1d7-4cd6-9ab7-e60431492878"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

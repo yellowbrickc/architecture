@@ -1,0 +1,10 @@
+.dockerignore
+.git
+.gitattributes
+.gitignore
+.idea
+.vscode
+Dockerfile
+README.md
+artifacts
+node_modules

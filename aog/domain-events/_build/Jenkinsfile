@@ -1,0 +1,89 @@
+/*
+    REMARK: this file is a Groovy DSL
+    => backslashes have to be escaped (=> use two of them)
+ */
+
+/* definition of stages */
+node('linux') {
+  stage('build') {
+    checkout([
+      $class: 'GitSCM',
+        branches: [[name: '*/master']],
+        doGenerateSubmoduleConfigurations: false,
+        gitTool: 'Linux',
+        extensions: [[$class: 'CleanBeforeCheckout']],
+        submoduleCfg: [],
+        userRemoteConfigs: [
+          [credentialsId: 'd7513143-6ccf-4fdf-bbff-56bc1666aa50',
+            url: 'git@git.sub.rocks:aog/domain-events.git']
+        ]
+    ])
+    wrap([
+      $class: 'AnsiColorBuildWrapper',
+        'colorMapName': 'XTerm',
+        'defaultFg': 1,
+        'defaultBg': 2
+    ]) {
+      sh '''#!/usr/bin/env sh
+        find . -name '*.sh' -exec chmod ugo+x {} \\;
+        ./_build/build-scripts/stage-build.sh
+      '''
+    }
+  }
+
+  
+  stage('validate-license') {
+    wrap([
+      $class: 'AnsiColorBuildWrapper',
+        'colorMapName': 'XTerm',
+        'defaultFg': 1,
+        'defaultBg': 2
+    ]) {
+      sh '''#!/usr/bin/env sh
+        ./_build/build-scripts/stage-validate-license.sh
+      '''
+    }
+  }
+  
+
+  stage('test') {
+    wrap([
+      $class: 'AnsiColorBuildWrapper',
+        'colorMapName': 'XTerm',
+        'defaultFg': 1,
+        'defaultBg': 2
+    ]) {
+      sh '''#!/usr/bin/env sh
+        ./_build/build-scripts/stage-test.sh
+      '''
+    }
+  }
+
+  stage('push') {
+    wrap([
+      $class: 'AnsiColorBuildWrapper',
+        'colorMapName': 'XTerm',
+        'defaultFg': 1,
+        'defaultBg': 2
+    ]) {
+      sh '''#!/usr/bin/env sh
+        ./_build/build-scripts/stage-push.sh
+      '''
+    }
+  }
+
+  
+  stage('publish') {
+    wrap([
+      $class: 'AnsiColorBuildWrapper',
+        'colorMapName': 'XTerm',
+        'defaultFg': 1,
+        'defaultBg': 2
+    ]) {
+      sh '''#!/usr/bin/env sh
+        ./_build/build-scripts/stage-publish.sh
+      '''
+    }
+  }
+  
+}

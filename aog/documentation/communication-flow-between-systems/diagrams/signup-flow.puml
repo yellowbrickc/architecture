@@ -1,0 +1,61 @@
+@startuml
+
+skinparam ParticipantPadding 20
+skinparam arrowThickness 1.5
+
+collections "Plan Selection" as PlanSelection #C2EDFF
+collections "Signup Controller" as SignupController #C2EDFF
+collections "Customer User" as CustomerRegistration #C2ABFF
+collections "Payment Profile" as PaymentProfile #FFECD6
+collections "Review" as Review #C2EDFF
+collections "Contract Center" as ContractCenter #F9FFE6
+collections "Thank You Page" as ThankYouPage #FFEDF0
+collections "Price Calculator" as PriceCalculator #dff9d6
+database "Domain Event Bus" as DomainEventBus
+
+title Signup Flow
+
+PlanSelection-[#ff0000]>SignupController : Creates signup
+SignupController-[#0000FF]>CustomerRegistration : Sends customer to register page
+CustomerRegistration-[#0000FF]>SignupController : Redirects with hashed data (including customerUserId)
+CustomerRegistration-[#ff0000]>DomainEventBus : Publishes customerUser.registered
+DomainEventBus-[#ff0000]>PriceCalculator : Consumes customerUser.registered
+SignupController->SignupController : Validates hash & takes data
+SignupController-[#0000FF]>PaymentProfile : Sends customer to payment profile page
+PaymentProfile-[#0000FF]>SignupController : Redirects with hashed data (including paymentProfileId)
+SignupController->SignupController : Validates hash & takes data
+SignupController-[#17b75f]>PriceCalculator : Request final price (based on plan, location, sales tax code ...)
+PriceCalculator-[#17b75f]>SignupController : Returns final price
+SignupController-[#0000FF]>Review : Sends customer to review page
+Review-[#0000FF]>SignupController : Customer confirms signup
+activate SignupController #b3ffb3
+note left of SignupController #b3ffb3
+    Waiting for processing...
+end note
+
+SignupController-[#ff0000]>DomainEventBus : Publishes signup.withTrialRequested
+' SignupController-[#0000FF]>SignupController : Customer waits
+DomainEventBus-[#ff0000]>ContractCenter : Consumes signup.withTrialRequested
+ContractCenter-[#ff0000]>DomainEventBus : Publishes contract.withTrialSigned
+DomainEventBus-[#ff0000]>ThankYouPage : Consumes contract.withTrialSigned
+DomainEventBus-[#ff0000]>SignupController : Consumes contract.withTrialSigned
+ThankYouPage-[#ff0000]>DomainEventBus : Publishes thankYouPage.published
+DomainEventBus-[#ff0000]>SignupController : Consumes thankYouPage.published
+deactivate SignupController
+SignupController-[#0000FF]>ThankYouPage : Send customer to "Thank you page"
+
+skinparam legendBackgroundColor #ffffff
+legend
+|= |= System |
+|<back:#C2EDFF>      </back>| New Business |
+|<back:#C2ABFF>      </back>| Identity Hub |
+|<back:#FFECD6>      </back>| Payment Connect |
+|<back:#F9FFE6>      </back>| Existing Business |
+|<back:#FFEDF0>      </back>| Service & Communicate |
+|<back:#dff9d6>      </back>| Pricing Hub |
+|<color:#ff0000>---</color>| Message communication |
+|<color:#0000FF>---</color>| UI steps |
+|<color:#17b75f>---</color>| API communication |
+endlegend
+
+@enduml

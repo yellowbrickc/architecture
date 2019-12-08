@@ -1,0 +1,43 @@
+{
+  "name": "domain-events",
+  "version": "1.0.0",
+  "description": "Contains the domain event schemas",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.sub.rocks:aog/domain-events.git"
+  },
+  "author": "Architecture Owner Group",
+  "license": "only cleverbridge internal use; may not be used for other than cleverbridge internal purposes and/or made accessible to persons outside cleverbridge and its contractors",
+  "dependencies": {
+    "recursive-readdir": "^2.2.1"
+  },
+  "publishConfig": {
+    "registry": "https://artifacts.sub.rocks/repository/npm-hosted/"
+  },
+  "devDependencies": {
+    "jest": "^21.0.2"
+  },
+  "jest": {
+    "automock": false,
+    "testEnvironment": "node",
+    "testRegex": "\\.spec\\.js$",
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/test/integration/"
+    ],
+    "collectCoverageFrom": [
+      "*.js",
+      "lib/**/*.js",
+      "!**/node_modules/**"
+    ],
+    "setupFiles": []
+  }
+}

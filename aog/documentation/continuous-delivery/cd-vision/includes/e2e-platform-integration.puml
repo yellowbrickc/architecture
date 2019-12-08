@@ -1,0 +1,8 @@
+@startuml
+
+partition e2e-platform-integration {
+    :run platform e2e tests;
+    :publish test results;
+}
+
+@enduml

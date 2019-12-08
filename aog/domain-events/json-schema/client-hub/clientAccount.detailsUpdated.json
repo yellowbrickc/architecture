@@ -1,0 +1,137 @@
+{
+  "id": "client-hub/clientAccount.detailsUpdated.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Client-Hub: Client Account Details Updated event",
+  "description": "Signals that the details of a client account has been updated",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The ID of the client account.",
+          "example": "4a4c0290-354f"
+        },
+        "details": {
+          "type": "object",
+          "description": "Detail information of the client account like address.",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the client account.",
+              "example": "cultv.io"
+            },
+            "street": {
+              "type": "string",
+              "description": "The street of the company address of the client.",
+              "example": "1201 Market St1"
+            },
+            "zip": {
+              "type": "string",
+              "description": "The zip of the company address of the client.",
+              "example": "PA 19107"
+            },
+            "city": {
+              "type": "string",
+              "description": "The city of the company address of the client.",
+              "example": "Philadelphia"
+            },
+            "country": {
+              "type": "string",
+              "description": "The iso code of the country of the company address of the client in ISO 3166 ALPHA-2 format.",
+              "length": 2,
+              "pattern": "^[A-Z]{2}$",
+              "example": "US"
+            },
+            "state": {
+              "type": ["string", "null"],
+              "description": "The iso code of the state of the company address of the client for US clients in ISO 3166 ALPHA-2 format.",
+              "pattern": "^[A-Z]{2}-[A-Z]{2}$",
+              "example": "US-AK"
+            },
+            "taxId": {
+              "type": ["string", "null"],
+              "description": "The vat id or sales tax id of the client account.",
+              "example": "client-sales-tax-id"
+            },
+            "taxIdType": {
+              "type": ["string", "null"],
+              "description": "The tax id type of the client account. Possible values: [`sales-tax-id` for US clients, `vat-id` for EU clients].",
+              "example": "sales-tax-id"
+            }
+          },
+          "required": [
+            "name",
+            "street",
+            "zip",
+            "city",
+            "country"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "details"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "clientAccount.detailsUpdated"
+      ],
+      "example": "clientAccount.detailsUpdated"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "4a4c0290-354f"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

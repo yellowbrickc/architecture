@@ -1,0 +1,98 @@
+{
+  "id": "existing-business/contract.chargeRequested.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Existing-Business: Contract Charge Requested Event",
+  "description": "Signals that a renewal charge for the contract has been requested.",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string", "description": "The unique id of the contract.", "example": "ctr_5"},
+        "clientAccountId": {"type": "string", "example": "cl_17"},
+        "customerUserId": {"type": "string", "description": "The id of the customer user.", "example": "cus_lsdjfl-34nsdf-23rsdf-eee"},
+        "paymentProfileId": {"type": "string", "description": "The id of the payment profile.", "example": "pp_444"},
+        "planId": {"type": "string", "description": "The planId the customer signed up for.", "example": "pl_hhufushsw"},
+        "planVersion": {"type": "integer", "description": "The version of the plan in the contract.", "example": 1},
+        "chargeRequestedAt": {"type": "string", "format": "date-time", "description": "The date and time when the renewal has been triggered.", "example": "2017-01-01T12:00:00.123Z"},
+        "renewalPrice": {"type": "number", "description": "The price including all fees and taxes that is due at the current renewal.", "example": 3.99},
+        "renewalCurrency": {"type": "string", "length": 3, "description": "The currency of the renewalPrice, using alphabetic ISO-4217 currency codes.", "example": "USD"},
+        "status": {"type": "string", "enum": ["chargeRequested"], "example": "chargeRequested", "description": "The status of the contract. Can only have the value 'chargeRequested'"},
+        "serviceEnd": {"type": "string", "format": "date-time","example": "2018-01-01T12:00:00.123Z", "description": "The date and time when the upcoming service period ends."},
+        "serviceStart": {"type": "string", "format": "date-time", "example": "2017-09-29T12:00:00.123Z", "description": "The date and time when the upcoming service period starts."},
+        "priceId": {"type": "string", "example": "saldkfjlkjsdf", "description": "The id of the price that was calculated and stored for the charge."}
+      },
+      "required": [
+        "id",
+        "clientAccountId",
+        "customerUserId",
+        "paymentProfileId",
+        "planId",
+        "planVersion",
+        "chargeRequestedAt",
+        "renewalPrice",
+        "renewalCurrency",
+        "status",
+        "serviceEnd",
+        "serviceStart"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "contract.chargeRequested"
+      ],
+      "example": "contract.chargeRequested"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "ctr_5"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

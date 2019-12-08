@@ -1,0 +1,49 @@
+@startuml
+actor Client as "Client"
+collections API as "Signup API"
+collections NBS as "New Business"
+collections IDH as "Identity Hub"
+collections PAYC as "Payment Connect"
+collections EBS as "Existing Business"
+collections SCO as "Serve & Communicate"
+entity EventBus as "Event Bus"
+
+Client -> API: Make POST request
+API -> NBS: Map input data and create signup
+
+activate NBS
+
+NBS -> IDH: POST request to create a new customerUser
+IDH -> IDH: create customerUser
+IDH -> EventBus: Publish customerUser.registered
+IDH -> NBS: send customerUser reference
+NBS -> NBS: Collect information for signup
+NBS -> PAYC: POST request to create a new paymentProfile
+PAYC -> PAYC: create paymentProfile
+PAYC -> EventBus: Publish paymentProfile.registered
+PAYC -> NBS: send paymentProfile reference
+NBS -> NBS: Collect information for signup
+
+alt contract with API
+	NBS -> EBS: POST request to create a new contract
+    EBS -> EBS: create new Contract
+    EBS -> EventBus: Publish contract.withoutTrialSigned
+    EBS -> NBS: send contract reference
+else contract with domain event
+    NBS -> EventBus: Publish signup.withoutTrialRequested
+    EventBus -> EBS : Consume signup.withoutTrialRequested
+    EBS -> EventBus: publish contract.withoutTrialSigned
+    EBS -> EBS : Create contract
+    EventBus -> NBS : Consume contract.withoutTrialSigned
+end alt
+
+NBS -> NBS : Collect information for signup
+NBS -> API : Prepare response
+API -> Client : Send response (with minimal data)
+
+deactivate NBS
+
+EventBus -> SCO : Consume contract.withoutTrialSigned
+SCO -> Client : Send data via webhook
+
+@enduml

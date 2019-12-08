@@ -1,0 +1,271 @@
+{
+  "id": "product-hub/plan.published.v2.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Product-Hub: Plan Published Event (Version 2)",
+  "description": "Signals that a new plan version has been published.",
+  "version": 2,
+  "type": "object",
+  "definitions": {
+    "translations": {
+      "type": "object",
+      "description": "All translations for the respective property",
+      "properties": {
+        "en": {
+          "type": "string",
+          "description": "The English value of the property.",
+          "example": "My Product Name"
+        }
+      },
+      "patternProperties": {
+        "(?!^en$)^[a-z]{2}(?:-[A-Z]{2})?$": {
+          "type": "string",
+          "description": "The translated values of the property in each respective language."
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "en"
+      ]
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The ID of the plan.",
+          "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+        },
+        "version": {
+          "type": "integer",
+          "description": "The current version of the plan.",
+          "example": 1
+        },
+        "clientAccountId": {
+          "type": "string",
+          "description": "The clientAccountId of the plan.",
+          "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+        },
+        "product": {
+          "type": "object",
+          "description": "The product which is part of this plan.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the product.",
+              "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+            },
+            "name": {
+              "description": "The name of the product for each locale it is set for, at least English.",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/translations"
+                }
+              ]
+            },
+            "description": {
+              "description": "The description of the product for each locale it is set for, at least English.",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/translations"
+                }
+              ]
+            },
+            "targetUrl": {
+              "description": "The target URL of the product for each locale it is set for, at least English.",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/translations"
+                }
+              ]
+            },
+            "taxCode": {
+              "type": "string",
+              "description": "The sales tax code for tax calculation. (Currently only 'DO010000' this resprents the avalara category 'Other digital goods'.)",
+              "example": "DO010000"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "description",
+            "targetUrl",
+            "taxCode"
+          ],
+          "additionalProperties": false
+        },
+        "service": {
+          "type": "object",
+          "description": "The service which is part of this plan.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the service.",
+              "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+            },
+            "name": {
+              "description": "The name of the service for each locale it is set for, at least English.",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/translations"
+                }
+              ]
+            },
+            "description": {
+              "description": "The description of the product for each locale it is set for, at least English.",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/translations"
+                }
+              ]
+            },
+            "productId": {
+              "type": "string",
+              "description": "The product ID this service is connected to. Should be the same as the product within this plan.",
+              "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+            },
+            "externalId": {
+              "type": "string",
+              "description": "The client can provide an external ID so that he can map this service to his own data",
+              "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "description",
+            "productId"
+          ],
+          "additionalProperties": false
+        },
+        "chargeOption": {
+          "type": "object",
+          "description": "The chargeOption which is part of this plan.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the chargeOption.",
+              "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+            },
+            "baseCurrency": {
+              "type": "string",
+              "description": "The ISO 4217 currency code.",
+              "pattern": "^[A-Z]{3}$",
+              "example": "USD"
+            },
+            "billingTerm": {
+              "type": "integer",
+              "description": "The billing term in months.",
+              "example": 12
+            },
+            "isGross": {
+              "type": "boolean",
+              "description": "Identifies if the prices are meant to be gross or net prices for tax calculation",
+              "example": true
+            },
+            "prices": {
+              "type": "array",
+              "description": "The prices with different currencies for this plan.",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "currency": {
+                    "type": "string",
+                    "description": "The ISO 4217 currency code.",
+                    "example": "USD",
+                    "pattern": "^[A-Z]{3}$"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "The amount of money this plan costs (no differentation between net and gross yet)",
+                    "example": 7.99
+                  }
+                },
+                "required": [
+                  "currency",
+                  "amount"
+                ]
+              }
+            },
+            "serviceId": {
+              "type": "string",
+              "description": "The service ID this chargeOption is connected to. Should be the same as the service within this plan.",
+              "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+            }
+          },
+          "required": [
+            "id",
+            "baseCurrency",
+            "billingTerm",
+            "serviceId",
+            "prices",
+            "isGross"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "clientAccountId",
+        "product",
+        "service",
+        "chargeOption"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "plan.published"
+      ],
+      "example": "plan.published"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "version": {
+      "type": "integer",
+      "const": 2
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

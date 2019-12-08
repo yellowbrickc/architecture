@@ -1,0 +1,129 @@
+{
+  "id": "client-hub/clientAccount.legalInformationAdded.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Client-Hub: Client Account Legal Information Added event",
+  "description": "Signals that the legal information of a client account has been added",
+  "version": 1,
+  "type": "object",
+  "definitions": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The ID of the client account.",
+          "example": "4a4c0290-354f"
+        },
+        "legalInformation": {
+          "type": "object",
+          "description": "Legal information of the client account.",
+          "properties": {
+            "management": {
+              "type": [
+                "string"
+              ],
+              "description": "The names of the management members.",
+              "example": "Craig Vodnik, Martin Trzaskalik, Reinhard Wille"
+            },
+            "supervisoryBoard": {
+              "type": [
+                "string"
+              ],
+              "description": "The name of the chairman of the supervisory board.",
+              "example": "Dr. Michael Inhester (Chairman)"
+            },
+            "registration": {
+              "type": [
+                "string"
+              ],
+              "description": "The company registration number.",
+              "example": "HRB 58900"
+            },
+            "commercialRegister": {
+              "type": [
+                "string"
+              ],
+              "description": "The commercial register.",
+              "example": "Local Court of Cologne"
+            },
+            "privacyPolicyUri": {
+              "type": [
+                "string"
+              ],
+              "description": "The URI leading to the client's privacy policy.",
+              "example": "https://client.com/privacy-policy"
+            },
+            "termsAndConditionsUri": {
+              "type": [
+                "string"
+              ],
+              "description": "The URI leading to the client's terms and conditions.",
+              "example": "https://client.com/terms-and-conditions"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "legalInformation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "eventId": {
+      "type": "string",
+      "description": "An Id which is unique for the entityId. Shall be a v1-uuid (time-based).",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "clientAccount.legalInformationAdded"
+      ],
+      "example": "clientAccount.legalInformationAdded"
+    },
+    "entityId": {
+      "type": "string",
+      "description": "An Id which is unique for one entity of an entityType. Shall be the same as the id property in the payload.",
+      "example": "4a4c0290-354f"
+    },
+    "clientAccountId": {
+      "type": "string",
+      "description": "Signals the corresponding client account of the entity if it has one.",
+      "example": "123"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 DateTimeStamp in UTC with millisecond precision.",
+      "example": "2017-01-01T12:00:00.123Z"
+    },
+    "version": {
+      "type": "integer",
+      "enum": [
+        1
+      ],
+      "example": 1
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "A unique ID used to track the flow of data, commands, events and alike through the whole domain.",
+      "example": "4a4c0290-354f-11e7-a919-92ebcb67fe33"
+    },
+    "payload": {
+      "$ref": "#/definitions/payload"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "eventType",
+    "entityId",
+    "createdAt",
+    "version",
+    "correlationId",
+    "payload"
+  ]
+}

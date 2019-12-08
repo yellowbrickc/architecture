@@ -1,0 +1,15 @@
+# nodejs specific
+node_modules
+npm-debug.log
+package-lock.json
+
+# editor
+.vscode
+.idea
+*.iml
+
+# service specific
+apiState.json
+
+coverage
+yarn-*.log
